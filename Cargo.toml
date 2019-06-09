@@ -1,0 +1,15 @@
+[package]
+name = "workspace_exec"
+version = "0.1.0"
+authors = ["Rouven Czerwinski <rouven@czerwinskis.de>"]
+edition = "2018"
+
+[dependencies]
+clap = "2"
+yaml-rust = "0.4"
+failure = "0.1.5"
+shellexpand = "1.0.0"
+
+[dependencies.i3ipc]
+path = "../i3ipc-rs"
+features = ["sway-1-1"]

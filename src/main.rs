@@ -90,14 +90,15 @@ fn change_dir_from_mapping(config: &Path, mut conn: &mut I3Connection) -> Result
         return Ok(false)
     }
     let mapping = mapping.unwrap();
-    match mapping[0]["mapping"][&workspace[..]].clone().into_string() {
-        Some(s) => match set_current_dir(tilde(&s).to_string()) {
-            Ok(_) => Ok(true),
-            Err(e) => {
-                println!("Could not set dir: {}", err_msg(e));
-                std::process::exit(1);
-            }
-        },
-        None => Ok(false),
+    let dir = match mapping[0]["mapping"][&workspace[..]].clone().into_string() {
+        Some(s) => tilde(&s).to_string(),
+        None => tilde("~").to_string(),
+    };
+    match set_current_dir(dir) {
+        Ok(_) => Ok(true),
+        Err(e) => {
+            println!("Could not set dir: {}", err_msg(e));
+            std::process::exit(1);
+        }
     }
 }
